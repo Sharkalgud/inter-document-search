@@ -15,7 +15,6 @@ def download_files():
         for item in response['Contents']:
             keys.append(item['Key'])
     for key in keys:
-        print(DOWNLOADDIR + key)
         s3Resource.meta.client.download_file(BUCKET, key, DOWNLOADDIR + key)
     return keys
 

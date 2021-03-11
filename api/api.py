@@ -14,14 +14,14 @@ def get_text_in_s3_files():
 
 @app.route('/search')
 def search():
-    search_term = request.args.get('term')
+    search_term = request.args.get('term').lower()
     file_text = all_file_text()
     search_results = {}
     for file_name in file_text.keys():
         text = file_text[file_name]
         sentenctes = text.split('. ')
         for sentence in sentenctes:
-            if search_term in sentence:
+            if search_term in sentence.lower():
                 if file_name in search_results:
                     search_results[file_name].append(sentence)
                 else:
