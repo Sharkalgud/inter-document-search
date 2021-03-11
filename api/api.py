@@ -1,5 +1,5 @@
 import time
-from flask import Flask
+from flask import Flask, request
 from search import all_file_text
 
 app = Flask(__name__)
@@ -11,3 +11,19 @@ def get_current_time():
 @app.route('/s3_files')
 def get_text_in_s3_files():
     return all_file_text()
+
+@app.route('/search')
+def search():
+    search_term = request.args.get('term')
+    file_text = all_file_text()
+    search_results = {}
+    for file_name in file_text.keys():
+        text = file_text[file_name]
+        sentenctes = text.split('. ')
+        for sentence in sentenctes:
+            if search_term in sentence:
+                if file_name in search_results:
+                    search_results[file_name].append(sentence)
+                else:
+                    search_results[file_name] = [sentence]
+    return search_results
