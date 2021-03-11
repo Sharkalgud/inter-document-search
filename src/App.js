@@ -1,24 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ResultsContainer from './ResultsContainer';
 
 function App() {
-  const [currentTime, setCurrentTime] = useState(0);
+  const [results, setResults] = useState({});
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch('/time').then(res => res.json()).then(data => {
-      setCurrentTime(data.time);
+    fetch('/search?term=' + searchTerm).then(res => res.json()).then(data => {
+      setResults(data);
     });
-  }, []);
+  }, [searchTerm]);
 
   return (
-    <div className="App">
-      <header className="App-header">
-
-        ... no changes in this part ...
-
-        <p>The current time is {currentTime}.</p>
-      </header>
+    <div style = {{textAlign: 'center', paddingTop: '30vh'}}>
+      <input type= 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
+      <br></br>
+      <ResultsContainer results = {results}/>
     </div>
   );
 }
