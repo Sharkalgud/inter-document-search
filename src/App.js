@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import ResultsContainer from './ResultsContainer';
+import Mark from "mark.js"
 
 function App() {
   const [results, setResults] = useState({});
@@ -9,6 +10,13 @@ function App() {
   useEffect(() => {
     fetch('/search?term=' + searchTerm).then(res => res.json()).then(data => {
       setResults(data);
+    }).then(() => {
+      var markInstance = new Mark(document.querySelectorAll("#search-result"));
+      markInstance.unmark({
+      done: () => {
+          markInstance.mark(searchTerm);
+      }
+      });
     });
   }, [searchTerm]);
 

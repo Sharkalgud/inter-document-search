@@ -5,7 +5,7 @@ class Result extends Component {
         return (
             <div>
                 <h1>{this.props.result[0]}</h1>
-                {this.props.result[1].map(sentence => (<p>{sentence}</p>))}
+                {this.props.result[1].map(sentence => (<p id="search-result">{sentence}</p>))}
             </div>
         )
     }
