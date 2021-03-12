@@ -67,7 +67,7 @@ def relevantContextSearch(question):
         for sentence in sentences:
             sentence_embedding = embeddings[sentence]
             result =  1 - spatial.distance.cosine(question_embedding, sentence_embedding)
-            if result > 0.5:
+            if result > 0.68:
                 sentence_obj = {"start": count, "length": len(sentence)}
                 if file_name in answers:
                     answers[file_name]["results"].append(sentence_obj)
