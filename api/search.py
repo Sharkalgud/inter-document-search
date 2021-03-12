@@ -27,7 +27,7 @@ def all_file_text():
     for file in os.listdir(directory):
         filename = os.fsdecode(file)
         if filename != ".DS_Store":
-            with open(DOWNLOADDIR + filename, 'r', encoding='windows-1252') as f:
+            with open(DOWNLOADDIR + filename, 'r') as f:
                 text = f.read()
             file_text[filename] = text
     return file_text

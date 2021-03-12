@@ -3,7 +3,6 @@ import './App.css';
 import ResultsContainer2 from './ResultsContainer2';
 
 function App() {
-  const [results, setResults] = useState({});
   const [results2, setResults2] = useState({});
   const [searchTerm, setSearchTerm] = useState("");
 
