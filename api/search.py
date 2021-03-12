@@ -25,7 +25,7 @@ def download_files():
 #upload files to s3 bucket
 def upload_file(file_name):
     s3Client = boto3.client('s3')
-    response = s3Client.upload_files(UPLOADDIR + file_name, BUCKET, file_name)
+    response = s3Client.upload_file(UPLOADDIR + file_name, BUCKET, file_name)
     return response
 
 #returns all the text for files in download/files in dict

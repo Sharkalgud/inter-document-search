@@ -1,3 +1,4 @@
+import os
 import time
 from flask import Flask, request
 from search import all_file_text, extactMatchSearch, relevantContextSearch, upload_file
@@ -42,8 +43,10 @@ def search2():
     else:
         return{}
 
-@app.route("/upload")
+@app.route("/upload", methods = ['POST'])
 def upload():
     f = request.files['file']
     f.save(os.path.join('files/uploads', f.filename))
-    upload_file(f.filename)
+    response = upload_file(f.filename)
+    print(response)
+    return {}
