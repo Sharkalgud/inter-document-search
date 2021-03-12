@@ -2,21 +2,15 @@ import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Tab, Row, Nav, Col} from 'react-bootstrap'
 import Content from './Content'
+import ResultFiles from './ResultFiles'
 
 function ResultsContainer(props) {
     return (
         <div>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                 <Row>
-                    <Col sm={3}>
-                    <Nav variant="pills" className="flex-column">
-                        {Object.entries(props.results).map(
-                            result =>
-                            <Nav.Item>
-                                <Nav.Link eventKey={result[0]}>{result[0]}</Nav.Link>
-                            </Nav.Item>
-                        )}
-                    </Nav>
+                    <Col sm={2}>
+                        <ResultFiles results= {props.results}/>
                     </Col>
                     <Col sm={9}>
                         <Content results = {props.results}/>
