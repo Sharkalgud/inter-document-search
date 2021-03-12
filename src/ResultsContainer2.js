@@ -12,7 +12,7 @@ function ResultsContainer2(props) {
     });
 
     return (
-        <div ref={resultsRef}>
+        <div style={{paddingLeft: '10vh', paddingRight: '10vh'}} ref={resultsRef}>
             {Object.entries(props.results).map(result => <Result2 result = {result}/>)}
         </div>
     );
