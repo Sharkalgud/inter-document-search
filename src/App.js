@@ -29,15 +29,13 @@ function App() {
   }, [isSearching, searchTerm]);
 
   return (
-    <div style = {{paddingTop: '5vh'}}>
+    <div style = {{paddingTop: '3vh', paddingBottom: '10vh'}}>
       <div>
       <Navbar bg='light'fixed="top">
         <InputGroup>
           <Form.Control type = 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
           <InputGroup.Append>
             <Button variant="outline-secondary" disabled={isSearching} onClick={search}>{isSearching ? 'Searching...' : 'Search'}</Button>
-            <Button variant="outline-secondary">Previous</Button>
-            <Button variant="outline-secondary">Next</Button>
           </InputGroup.Append>
         </InputGroup>
       </Navbar>
