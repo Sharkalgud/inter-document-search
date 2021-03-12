@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import ResultsContainer from './ResultsContainer';
 import Mark from "mark.js"
-import Form from 'react-bootstrap/Form'
 
 function App() {
   const [results, setResults] = useState({});
@@ -22,10 +21,8 @@ function App() {
   }, [searchTerm]);
 
   return (
-    <div style = {{paddingTop: '30vh'}}>
-      <div style = {{textAlign: 'center'}}>
-        <Form.Control type= 'text'  value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything' />
-      </div>
+    <div style = {{textAlign: 'center', paddingTop: '30vh'}}>
+      <input type= 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
       <br></br>
       <ResultsContainer results = {results}/>
     </div>

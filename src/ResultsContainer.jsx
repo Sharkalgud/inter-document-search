@@ -1,22 +1,10 @@
 import React from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import {Tab, Row, Nav, Col} from 'react-bootstrap'
-import Content from './Content'
-import ResultFiles from './ResultFiles'
+import Result from './Result'
 
 function ResultsContainer(props) {
     return (
         <div>
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                <Row>
-                    <Col sm={2}>
-                        <ResultFiles results= {props.results}/>
-                    </Col>
-                    <Col sm={9}>
-                        <Content results = {props.results}/>
-                    </Col>
-                </Row>
-            </Tab.Container>
+            {Object.entries(props.results).map(result => <Result result = {result}/>)}
         </div>
     );
 }
