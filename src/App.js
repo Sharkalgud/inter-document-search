@@ -6,6 +6,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import Button from 'react-bootstrap/Button';
 import Navbar from 'react-bootstrap/Navbar'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from 'react-bootstrap/Dropdown'
 
 function App() {
   const [results2, setResults2] = useState({});
@@ -33,6 +34,19 @@ function App() {
       <div>
       <Navbar bg='light'fixed="top">
         <InputGroup>
+          <Dropdown>
+            <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+              Upload File
+            </Dropdown.Toggle>
+
+            <Dropdown.Menu>
+              <Form>
+                <Form.Group>
+                  <Form.File id="exampleFormControlFile1"/>
+                </Form.Group>
+              </Form>
+            </Dropdown.Menu>
+          </Dropdown>
           <Form.Control type = 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
           <InputGroup.Append>
             <Button variant="outline-secondary" disabled={isSearching} onClick={search}>{isSearching ? 'Searching...' : 'Search'}</Button>

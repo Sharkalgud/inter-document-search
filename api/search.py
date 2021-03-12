@@ -6,6 +6,7 @@ from scipy import spatial
 
 BUCKET = "seed-serverless-notes-api-tutorial-file-storage"
 DOWNLOADDIR = "files/downloads/"
+UPLOADDIR = "files/uploads/"
 
 #downloads all files present in s3 bucket
 #returns keys in downloads
@@ -20,6 +21,12 @@ def download_files():
     for key in keys:
         s3Resource.meta.client.download_file(BUCKET, key, DOWNLOADDIR + key)
     return keys
+
+#upload files to s3 bucket
+def upload_file(file_name):
+    s3Client = boto3.client('s3')
+    response = s3Client.upload_files(UPLOADDIR + file_name, BUCKET, file_name)
+    return response
 
 #returns all the text for files in download/files in dict
 def all_file_text():
