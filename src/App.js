@@ -21,8 +21,10 @@ function App() {
   }, [searchTerm]);
 
   return (
-    <div style = {{textAlign: 'center', paddingTop: '30vh'}}>
-      <input type= 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
+    <div style = {{paddingTop: '30vh'}}>
+      <div style = {{textAlign: 'center'}}>
+        <input type= 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
+      </div>
       <br></br>
       <ResultsContainer results = {results}/>
     </div>
