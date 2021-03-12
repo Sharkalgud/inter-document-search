@@ -1,5 +1,8 @@
 import boto3
 import os
+import requests
+import json
+from scipy import spatial
 
 BUCKET = "seed-serverless-notes-api-tutorial-file-storage"
 DOWNLOADDIR = "files/downloads/"
@@ -49,3 +52,43 @@ def extactMatchSearch(search_term):
                     search_results[file_name] = {"text": text, "results": [sentence_obj]}
             count += len(sentence) + 2
     return search_results
+
+
+#returns positions of sentences in each document that are relevant to the query made
+def relevantContextSearch(question):
+    file_text = all_file_text()
+    answers = {}
+    for file_name in file_text.keys():
+        text = file_text[file_name]
+        sentences = text.split('. ')
+        embeddings = getEmbeddings(question, sentences)
+        question_embedding = embeddings[question]
+        count = 0
+        for sentence in sentences:
+            sentence_embedding = embeddings[sentence]
+            result =  1 - spatial.distance.cosine(question_embedding, sentence_embedding)
+            if result > 0.5:
+                sentence_obj = {"start": count, "length": len(sentence)}
+                if file_name in answers:
+                    answers[file_name]["results"].append(sentence_obj)
+                else:
+                    answers[file_name] = {"text": text, "results": [sentence_obj]}
+            count += len(sentence) + 2
+    return answers
+
+#take questions and sentencts and resturn dict of their embeddings or something like that
+def getEmbeddings(question, sentences):
+    chunkObj = {"0": question}
+    count = 1
+    for sentence in sentences:
+        chunkObj[str(count)] = sentence
+        count += 1
+    requesObj = {"chunk": chunkObj}
+
+    url = 'http://3.101.151.128:8123/v3/chunk_embeddings/'
+    header = {"Content-Type": "application/json"}
+    response = requests.post(url, json=requesObj, headers=header)
+    response.raise_for_status()
+    raw_embeddings = json.loads(response.text)
+
+    return raw_embeddings

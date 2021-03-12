@@ -1,6 +1,6 @@
 import time
 from flask import Flask, request
-from search import all_file_text, extactMatchSearch
+from search import all_file_text, extactMatchSearch, relevantContextSearch
 
 app = Flask(__name__)
 
@@ -31,6 +31,11 @@ def search():
 @app.route('/search2')
 def search2():
     search_term = request.args.get('term').lower()
+    search_mode = request.args.get('mode').lower() if request.args.get('mode') else ''
+    print(search_mode)
     if search_term == '':
         return {}
-    return extactMatchSearch(search_term)
+    if search_mode == 'exactMatch' or search_mode == '':
+        return extactMatchSearch(search_term)
+    elif search_mode == 'hebbia':
+        return relevantContextSearch(search_term)
