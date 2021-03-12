@@ -1,6 +1,7 @@
 import React from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import {Tab, Row, Nav, Col} from 'react-bootstrap'
+import Content from './Content'
 
 function ResultsContainer(props) {
     return (
@@ -18,14 +19,7 @@ function ResultsContainer(props) {
                     </Nav>
                     </Col>
                     <Col sm={9}>
-                    <Tab.Content>
-                        {Object.entries(props.results).map(
-                            result =>
-                            <Tab.Pane eventKey={result[0]}>
-                                <p>{result[1]}</p>
-                            </Tab.Pane>
-                        )}
-                    </Tab.Content>
+                        <Content results = {props.results}/>
                     </Col>
                 </Row>
             </Tab.Container>
