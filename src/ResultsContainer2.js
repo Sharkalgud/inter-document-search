@@ -6,19 +6,13 @@ import Navbar from 'react-bootstrap/Navbar'
 function ResultsContainer2(props) {
     const resultsRef = useRef(null);
     const [resultCount, setResultCount] = useState(0);
-    // useEffect(() => {
-    //     var nodes = resultsRef.current.querySelectorAll("mark");
-    //     console.log(nodes.length);
-    //     if(nodes.length > 0){
-    //         nodes[resultCount].scrollIntoView({ behavior: 'smooth', block: 'center' });
-    //     }
-    // });
 
     const moveForward = () => {
         var nodes = resultsRef.current.querySelectorAll("mark");
         if(nodes.length > 0){
             setResultCount(resultCount === nodes.length - 1 ? 0: resultCount + 1);
             nodes[resultCount].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            nodes[resultCount].style.display = '';
         }
     }
 
@@ -27,6 +21,7 @@ function ResultsContainer2(props) {
         if(nodes.length > 0){
             setResultCount(resultCount === 0 ? nodes.length - 1 : resultCount - 1);
             nodes[resultCount].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            nodes[resultCount].style.display = '';
         }
     }
 
@@ -41,7 +36,7 @@ function ResultsContainer2(props) {
     return (
         <div>
             <Navbar bg='light' fixed="bottom">
-                <h3 style={{paddingRight: '3vh'}}>{'Result ' + resultCount + ' of ' + getResultCount()}</h3>
+                <h3 style={{paddingRight: '3vh'}}>{'Result ' + (resultCount + 1) + ' of ' + getResultCount()}</h3>
                 <Button variant="outline-secondary" onClick={moveForward}>Next</Button>
                 <Button variant="outline-secondary" onClick={moveBackwards}>Previous</Button>
             </Navbar>
