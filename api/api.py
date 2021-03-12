@@ -33,6 +33,8 @@ def search2():
     search_term = request.args.get('term').lower()
     file_text = all_file_text()
     search_results = {}
+    if search_term == '':
+        return search_results
     for file_name in file_text.keys():
         text = file_text[file_name]
         sentenctes = text.split('. ')
