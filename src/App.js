@@ -21,7 +21,8 @@ function App() {
   const search = useCallback(async() => {
     if(isSearching) return
     setIsSearching(true)
-    fetch('/search2?term=' + searchTerm +'&mode=hebbia').then(res => res.json()).then(data => {
+    //SWITCH BACK TO HEBBIA BEFORE DEMO
+    fetch('/search2?term=' + searchTerm +'&mode=exactMatch').then(res => res.json()).then(data => {
       setResults2(data);
       setIsSearching(false);
     });
@@ -34,7 +35,7 @@ function App() {
         <InputGroup>
           <Form.Control type = 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
           <InputGroup.Append>
-            <Button variant="outline-secondary" disabled={isSearching} onClick={search}>Search</Button>
+            <Button variant="outline-secondary" disabled={isSearching} onClick={search}>{isSearching ? 'Searching...' : 'Search'}</Button>
             <Button variant="outline-secondary">Previous</Button>
             <Button variant="outline-secondary">Next</Button>
           </InputGroup.Append>

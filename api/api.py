@@ -35,7 +35,9 @@ def search2():
     print(search_mode)
     if search_term == '':
         return {}
-    if search_mode == 'exactMatch' or search_mode == '':
+    if search_mode == 'exactmatch' or search_mode == '':
         return extactMatchSearch(search_term)
     elif search_mode == 'hebbia':
         return relevantContextSearch(search_term)
+    else:
+        return{}
