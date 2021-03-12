@@ -7,7 +7,7 @@ function ResultsContainer2(props) {
         var nodes = resultsRef.current.querySelectorAll("mark");
         console.log(nodes.length);
         if(nodes.length > 0){
-            nodes[0].scrollIntoView({ behavior: 'smooth' });
+            nodes[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
     });
 
