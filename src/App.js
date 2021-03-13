@@ -26,7 +26,7 @@ function App() {
     if(isSearching) return
     setIsSearching(true)
     //SWITCH BACK TO HEBBIA BEFORE DEMO
-    fetch('/search2?term=' + searchTerm +'&mode=exactMatch').then(res => res.json()).then(data => {
+    fetch('/search2?term=' + searchTerm +'&mode=hebbia').then(res => res.json()).then(data => {
       setResults2(data);
       setIsSearching(false);
       setSearchHistory({'history': [searchTerm].concat(searchHistory['history'])});
@@ -66,7 +66,7 @@ function App() {
           <Form.Control type = 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
           <InputGroup.Append>
             <Button variant="outline-secondary" disabled={isSearching} onClick={search}>{isSearching ? 'Searching...' : 'Search'}</Button>
-            <Dropdown>
+            <Dropdown drop="left">
               <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
                 Search History
               </Dropdown.Toggle>

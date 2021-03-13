@@ -74,13 +74,18 @@ def relevantContextSearch(question):
         for sentence in sentences:
             sentence_embedding = embeddings[sentence]
             result =  1 - spatial.distance.cosine(question_embedding, sentence_embedding)
+            offset = 2
             if result > 0.68:
-                sentence_obj = {"start": count, "length": len(sentence)}
+                addOn = "(" + str(int(result * 100)) + "%)"
+                sentence_obj = {"start": count, "length": (len(sentence) + len(addOn))}
+                text = text[:(count + len(sentence))] + addOn + text[(count + len(sentence)):]
+                offset += len(addOn)
                 if file_name in answers:
                     answers[file_name]["results"].append(sentence_obj)
                 else:
-                    answers[file_name] = {"text": text, "results": [sentence_obj]}
-            count += len(sentence) + 2
+                    answers[file_name] = {"results": [sentence_obj]}
+            count += len(sentence) + offset
+        answers[file_name]["text"] = text
     return answers
 
 #take questions and sentencts and resturn dict of their embeddings or something like that
