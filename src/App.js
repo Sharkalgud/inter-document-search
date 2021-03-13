@@ -14,6 +14,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
+  const [searchHistory, setSearchHistory] = useState({'history':[]});
 
   // useEffect(() => {
   //   fetch('/search2?term=' + searchTerm +'&mode=hebbia').then(res => res.json()).then(data => {
@@ -28,6 +29,8 @@ function App() {
     fetch('/search2?term=' + searchTerm +'&mode=exactMatch').then(res => res.json()).then(data => {
       setResults2(data);
       setIsSearching(false);
+      setSearchHistory({'history': [searchTerm].concat(searchHistory['history'])});
+      console.log(searchHistory);
     });
   }, [isSearching, searchTerm]);
 
@@ -63,6 +66,15 @@ function App() {
           <Form.Control type = 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
           <InputGroup.Append>
             <Button variant="outline-secondary" disabled={isSearching} onClick={search}>{isSearching ? 'Searching...' : 'Search'}</Button>
+            <Dropdown>
+              <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
+                Search History
+              </Dropdown.Toggle>
+
+              <Dropdown.Menu>
+                {searchHistory['history'].map(term => <Dropdown.Item onClick={(e) => {setSearchTerm(term)}}>{term}</Dropdown.Item>)}
+              </Dropdown.Menu>
+            </Dropdown>
           </InputGroup.Append>
         </InputGroup>
       </Navbar>
