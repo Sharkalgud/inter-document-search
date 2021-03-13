@@ -8,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Dropdown from 'react-bootstrap/Dropdown'
 import axios from 'axios';
+import ButtonGroup from 'react-bootstrap/ButtonGroup'
 
 function App() {
   const [results2, setResults2] = useState({});
@@ -15,24 +16,17 @@ function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [selectedFile, setSelectedFile] = useState(null);
   const [searchHistory, setSearchHistory] = useState({'history':[]});
-
-  // useEffect(() => {
-  //   fetch('/search2?term=' + searchTerm +'&mode=hebbia').then(res => res.json()).then(data => {
-  //     setResults2(data);
-  //   });
-  // }, [searchTerm]);
+  const [searchConfidence, setSearchConfidence] = useState('medium');
 
   const search = useCallback(async() => {
     if(isSearching) return
     setIsSearching(true)
-    //SWITCH BACK TO HEBBIA BEFORE DEMO
-    fetch('/search2?term=' + searchTerm +'&mode=hebbia').then(res => res.json()).then(data => {
+    fetch('/search2?term=' + searchTerm +'&mode=hebbia' + '&clevel=' + searchConfidence).then(res => res.json()).then(data => {
       setResults2(data);
       setIsSearching(false);
       setSearchHistory({'history': [searchTerm].concat(searchHistory['history'])});
-      console.log(searchHistory);
     });
-  }, [isSearching, searchTerm]);
+  }, [isSearching, searchTerm, searchConfidence]);
 
   const fileUpload = () => {
     const formData = new FormData();
@@ -65,7 +59,17 @@ function App() {
           </Dropdown>
           <Form.Control type = 'text' value = {searchTerm} onChange = {e => setSearchTerm(e.target.value)} placeholder = 'Search for anything'/>
           <InputGroup.Append>
-            <Button variant="outline-secondary" disabled={isSearching} onClick={search}>{isSearching ? 'Searching...' : 'Search'}</Button>
+            <Dropdown as={ButtonGroup}>
+              <Button variant="outline-secondary" disabled={isSearching} onClick={search}>
+                {isSearching ? 'Searching...' : (searchConfidence === "medium" ? 'Search' : (searchConfidence === "low" ? 'Low Confidence Search' : 'High Confidence Search'))}
+              </Button>
+              <Dropdown.Toggle split variant="outline-secondary" />
+              <Dropdown.Menu>
+                <Dropdown.Item onClick={()=>{setSearchConfidence("low")}}>Low Confidence Search</Dropdown.Item>
+                <Dropdown.Item onClick={()=>{setSearchConfidence("medium")}}>Normal Search</Dropdown.Item>
+                <Dropdown.Item onClick={()=>{setSearchConfidence("high")}}>High Confidence Search</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <Dropdown drop="left">
               <Dropdown.Toggle variant="outline-secondary" id="dropdown-basic">
                 Search History

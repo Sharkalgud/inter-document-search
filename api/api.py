@@ -33,13 +33,14 @@ def search():
 def search2():
     search_term = request.args.get('term').lower()
     search_mode = request.args.get('mode').lower() if request.args.get('mode') else ''
+    confidence_level = request.args.get('clevel').lower() if request.args.get('clevel') else ''
     print(search_mode)
     if search_term == '':
         return {}
     if search_mode == 'exactmatch' or search_mode == '':
         return extactMatchSearch(search_term)
     elif search_mode == 'hebbia':
-        return relevantContextSearch(search_term)
+        return relevantContextSearch(search_term, confidence_level)
     else:
         return{}
 

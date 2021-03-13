@@ -62,7 +62,12 @@ def extactMatchSearch(search_term):
 
 
 #returns positions of sentences in each document that are relevant to the query made
-def relevantContextSearch(question):
+def relevantContextSearch(question, confidence):
+    threshold = .65
+    if confidence == 'low':
+        threshold = .50
+    elif confidence == 'high':
+        threshold = .85
     file_text = all_file_text()
     answers = {}
     for file_name in file_text.keys():
@@ -75,7 +80,7 @@ def relevantContextSearch(question):
             sentence_embedding = embeddings[sentence]
             result =  1 - spatial.distance.cosine(question_embedding, sentence_embedding)
             offset = 2
-            if result > 0.68:
+            if result > threshold:
                 addOn = "(" + str(int(result * 100)) + "%)"
                 sentence_obj = {"start": count, "length": (len(sentence) + len(addOn))}
                 text = text[:(count + len(sentence))] + addOn + text[(count + len(sentence)):]
@@ -85,7 +90,8 @@ def relevantContextSearch(question):
                 else:
                     answers[file_name] = {"results": [sentence_obj]}
             count += len(sentence) + offset
-        answers[file_name]["text"] = text
+        if file_name in answers:
+            answers[file_name]["text"] = text
     return answers
 
 #take questions and sentencts and resturn dict of their embeddings or something like that
